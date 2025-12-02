@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen active">
+        <div class="container">
+            <h1 class="game-title">🎮 Tic-Tac-Toe Online</h1>
+            <div class="login-box">
+                <h2>Enter Your Username</h2>
+                <input type="text" id="usernameInput" placeholder="Enter unique username" maxlength="20" autocomplete="off">
+                <button id="loginBtn" class="btn btn-primary">Join Game</button>
+                <p class="error-msg" id="loginError"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lobby Screen -->
+    <div id="lobbyScreen" class="screen">
+        <div class="container">
+            <div class="header">
+                <h1 class="game-title">🎮 Tic-Tac-Toe Lobby</h1>
+                <div class="user-info">
+                    <span class="username-display">👤 <span id="currentUsername"></span></span>
+                    <button id="logoutBtn" class="btn btn-small">Logout</button>
+                </div>
+            </div>
+
+            <div class="lobby-content">
+                <!-- Online Players Section -->
+                <div class="panel">
+                    <h2>👥 Online Players (<span id="playerCount">0</span>)</h2>
+                    <div id="playersList" class="players-list">
+                        <p class="empty-message">No other players online</p>
+                    </div>
+                </div>
+
+                <!-- Room Management Section -->
+                <div class="panel">
+                    <h2>🎯 Game Rooms</h2>
+                    <div class="room-actions">
+                        <button id="createRoomBtn" class="btn btn-primary">Create New Room</button>
+                        <div class="join-room-section">
+                            <input type="text" id="roomIdInput" placeholder="Enter Room ID" maxlength="10">
+                            <button id="joinRoomBtn" class="btn btn-secondary">Join Room</button>
+                        </div>
+                    </div>
+                    <div id="roomsList" class="rooms-list">
+                        <p class="empty-message">No active rooms</p>
+                    </div>
+                    <p class="error-msg" id="lobbyError"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Room Screen -->
+    <div id="gameScreen" class="screen">
+        <div class="container">
+            <div class="header">
+                <h1 class="game-title">🎮 Tic-Tac-Toe</h1>
+                <div class="user-info">
+                    <span class="username-display">👤 <span id="gameUsername"></span></span>
+                    <button id="leaveRoomBtn" class="btn btn-small">Leave Room</button>
+                </div>
+            </div>
+
+            <div class="game-content">
+                <!-- Game Info Section -->
+                <div class="game-sidebar">
+                    <div class="panel">
+                        <h3>Room Info</h3>
+                        <p><strong>Room ID:</strong> <span id="roomIdDisplay"></span></p>
+                        <button id="copyRoomLinkBtn" class="btn btn-small">📋 Copy Room Link</button>
+                        <p class="share-link-msg" id="shareLinkMsg"></p>
+                    </div>
+
+                    <div class="panel">
+                        <h3>Players</h3>
+                        <div id="gamePlayers" class="game-players">
+                            <div class="player-item">
+                                <span class="player-symbol">❌</span>
+                                <span class="player-name" id="playerX">Waiting...</span>
+                            </div>
+                            <div class="player-item">
+                                <span class="player-symbol">⭕</span>
+                                <span class="player-name" id="playerO">Waiting...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Section -->
+                    <div class="panel chat-panel">
+                        <h3>💬 Chat</h3>
+                        <div id="chatMessages" class="chat-messages"></div>
+                        <div class="chat-input-section">
+                            <input type="text" id="chatInput" placeholder="Type a message..." maxlength="100">
+                            <button id="sendChatBtn" class="btn btn-small">Send</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Board Section -->
+                <div class="game-main">
+                    <div class="game-status">
+                        <h2 id="gameStatus">Waiting for opponent...</h2>
+                        <p id="turnIndicator"></p>
+                    </div>
+
+                    <div id="gameBoard" class="game-board">
+                        <div class="cell" data-index="0"></div>
+                        <div class="cell" data-index="1"></div>
+                        <div class="cell" data-index="2"></div>
+                        <div class="cell" data-index="3"></div>
+                        <div class="cell" data-index="4"></div>
+                        <div class="cell" data-index="5"></div>
+                        <div class="cell" data-index="6"></div>
+                        <div class="cell" data-index="7"></div>
+                        <div class="cell" data-index="8"></div>
+                    </div>
+
+                    <button id="resetGameBtn" class="btn btn-secondary" style="display: none;">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Match Summary Modal -->
+    <div id="summaryModal" class="modal">
+        <div class="modal-content">
+            <h2 id="summaryTitle">Game Over!</h2>
+            <div id="summaryDetails" class="summary-details"></div>
+            <div class="modal-actions">
+                <button id="playAgainBtn" class="btn btn-primary">Play Again</button>
+                <button id="backToLobbyBtn" class="btn btn-secondary">Back to Lobby</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -121,7 +121,18 @@ class TicTacToeClient {
 
     connectWebSocket() {
         // Connect to WebSocket server (adjust URL as needed)
-        const wsUrl = 'ws://localhost:8080';
+        // For production, update this URL after deploying your server
+        const isLocal = window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1' ||
+                       window.location.hostname === '';
+        
+        // UPDATE THIS URL with your deployed server URL (e.g., from Render.com, Railway.app)
+        const productionWsUrl = 'wss://your-server-name.onrender.com';
+        const localWsUrl = 'ws://localhost:8080';
+        
+        const wsUrl = isLocal ? localWsUrl : productionWsUrl;
+        
+        console.log('Connecting to WebSocket:', wsUrl);
         this.ws = new WebSocket(wsUrl);
         
         this.ws.onopen = () => {

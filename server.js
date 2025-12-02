@@ -39,9 +39,10 @@ class TicTacToeServer {
             });
         });
         
-        this.server.listen(this.port, () => {
+        this.server.listen(this.port, '0.0.0.0', () => {
             console.log(`✓ Tic-Tac-Toe server running on port ${this.port}`);
-            console.log(`✓ WebSocket URL: ws://localhost:${this.port}`);
+            console.log(`✓ Server listening on 0.0.0.0:${this.port}`);
+            console.log(`✓ Ready to accept WebSocket connections`);
         });
     }
 
@@ -516,6 +517,7 @@ class TicTacToeServer {
     }
 }
 
-// Start the server
-const server = new TicTacToeServer(8080);
+// Start the server with port from environment variable or default to 8080
+const PORT = process.env.PORT || 8080;
+const server = new TicTacToeServer(PORT);
 server.start();

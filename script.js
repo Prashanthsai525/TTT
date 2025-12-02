@@ -127,7 +127,7 @@ class TicTacToeClient {
                        window.location.hostname === '';
         
         // UPDATE THIS URL with your deployed server URL (e.g., from Render.com, Railway.app)
-        const productionWsUrl = 'wss://your-server-name.onrender.com';
+        const productionWsUrl = 'wss://ttt-r1g9.onrender.com';
         const localWsUrl = 'ws://localhost:8080';
         
         const wsUrl = isLocal ? localWsUrl : productionWsUrl;

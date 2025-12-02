@@ -170,7 +170,9 @@ class TicTacToeServer {
                 playerX: client.username,
                 playerO: null,
                 gameOver: false,
-                winner: null
+                winner: null,
+                moveHistoryX: [],
+                moveHistoryO: []
             },
             spectators: []
         };
@@ -293,7 +295,9 @@ class TicTacToeServer {
                 playerX: room.players[0],
                 playerO: null,
                 gameOver: false,
-                winner: null
+                winner: null,
+                moveHistoryX: [],
+                moveHistoryO: []
             };
         }
         
@@ -324,8 +328,18 @@ class TicTacToeServer {
         // Check if it's player's turn
         if (gameState.currentTurn !== symbol) return;
         
+        // Get move history for current player
+        const moveHistory = symbol === 'X' ? gameState.moveHistoryX : gameState.moveHistoryO;
+        
+        // If player already has 3 pieces, remove the oldest one (sliding window)
+        if (moveHistory.length >= 3) {
+            const oldestMoveIndex = moveHistory.shift();
+            gameState.board[oldestMoveIndex] = null;
+        }
+        
         // Make move
         gameState.board[index] = symbol;
+        moveHistory.push(index);
         gameState.currentTurn = symbol === 'X' ? 'O' : 'X';
         
         // Broadcast move to all players in room
@@ -400,7 +414,9 @@ class TicTacToeServer {
             playerX: room.players[0],
             playerO: room.players[1] || null,
             gameOver: false,
-            winner: null
+            winner: null,
+            moveHistoryX: [],
+            moveHistoryO: []
         };
         
         // Broadcast rematch acceptance
@@ -451,11 +467,7 @@ class TicTacToeServer {
             }
         }
         
-        // Check for draw
-        if (board.every(cell => cell !== null)) {
-            return { winner: 'draw', line: null };
-        }
-        
+        // No draw condition - game continues with sliding window until someone wins
         return null;
     }
 

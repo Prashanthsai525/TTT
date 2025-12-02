@@ -11,7 +11,9 @@ class TicTacToeClient {
             playerX: null,
             playerO: null,
             gameOver: false,
-            winner: null
+            winner: null,
+            moveHistoryX: [],
+            moveHistoryO: []
         };
         this.reconnectAttempts = 0;
         this.maxReconnectAttempts = 5;
@@ -127,7 +129,7 @@ class TicTacToeClient {
                        window.location.hostname === '';
         
         // UPDATE THIS URL with your deployed server URL (e.g., from Render.com, Railway.app)
-        const productionWsUrl = 'wss://ttt-r1g9.onrender.com';
+        const productionWsUrl = 'wss://your-server-name.onrender.com';
         const localWsUrl = 'ws://localhost:8080';
         
         const wsUrl = isLocal ? localWsUrl : productionWsUrl;
@@ -324,6 +326,8 @@ class TicTacToeClient {
         this.gameState.playerO = data.playerO;
         this.gameState.gameOver = false;
         this.gameState.winner = null;
+        this.gameState.moveHistoryX = [];
+        this.gameState.moveHistoryO = [];
         
         this.updateGameDisplay();
         this.clearBoard();
@@ -398,7 +402,8 @@ class TicTacToeClient {
     }
 
     handleGameMove(data) {
-        this.gameState.board[data.index] = data.symbol;
+        // Use the complete board state from server (includes sliding window changes)
+        this.gameState.board = data.board;
         this.gameState.currentTurn = data.nextTurn;
         
         this.renderBoard();
@@ -517,6 +522,8 @@ class TicTacToeClient {
             this.gameState.gameOver = false;
             this.gameState.winner = null;
             this.gameState.winningLine = null;
+            this.gameState.moveHistoryX = [];
+            this.gameState.moveHistoryO = [];
             
             this.clearBoard();
             this.updateGameDisplay();
